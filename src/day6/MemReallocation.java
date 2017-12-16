@@ -10,24 +10,25 @@ public class MemReallocation {
 	private ArrayList<Integer> memory;
 	private HashMap<String, Integer> snapshots;
 
-	public MemReallocation(String filename){
-		memory = new ArrayList<Integer>();
+	public MemReallocation(ArrayList<Integer> memory){
+		this.memory = memory;
 		snapshots = new HashMap<String, Integer>();
+	}
+	
+	public static void main(String[] args) {
+		ArrayList<Integer> memory = new ArrayList<Integer>();
 		Scanner in = null;
 		try {
-			in = new Scanner(new FileReader(filename));
+			in = new Scanner(new FileReader("memory.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		while(in.hasNext()){
 			memory.add(in.nextInt());
 		}
-	}
-	
-	public static void main(String[] args) {
-		MemReallocation mem = new MemReallocation("memory.txt");
+		in.close();
+		MemReallocation mem = new MemReallocation(memory);
 		mem.run();
-		
 	}
 	
 	public void run(){

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 
-public class CPU {
+public class VirtualMachine {
 	
 	private final String GT = ">";
 	private final String LT = "<";
@@ -21,7 +21,7 @@ public class CPU {
 	private HashMap<String, Integer> memory;
 	private ArrayList<String> instructions;
 	
-	public CPU(String filename){
+	public VirtualMachine(String filename){
 		memory = new HashMap<String, Integer>();
 		instructions = new ArrayList<String>();
 		Scanner in = null;
@@ -35,11 +35,12 @@ public class CPU {
 			instructions.add(line);
 			memory.put(line.substring(0, line.indexOf(" ")), 0);
 		}
+		in.close();
 	}
 	
 	public static void main(String[] args) {
-		CPU cpu = new CPU("instructions.txt");
-		cpu.run();
+		VirtualMachine vm = new VirtualMachine("instructions.txt");
+		vm.run();
 	}
 	
 	public void run(){

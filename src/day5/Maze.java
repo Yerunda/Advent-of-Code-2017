@@ -10,32 +10,34 @@ import java.util.Scanner;
  *
  */
 public class Maze {
-
+	
 	private ArrayList<Integer> maze;
-
-	public Maze(String filename){
-		maze = new ArrayList<Integer>();
+	
+	public Maze(ArrayList<Integer> maze){
+		this.maze = maze;
+	}
+	
+	public static void main(String[] args) {
+		ArrayList<Integer> maze = new ArrayList<Integer>();
 		Scanner in = null;
 		try {
-			in = new Scanner(new FileReader(filename));
+			in = new Scanner(new FileReader("maze.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		while(in.hasNextInt()){
 			maze.add(in.nextInt());
 		}
-	}
-
-	public static void main(String[] args) {
-		Maze main = new Maze("maze.txt");
+		in.close();
+		Maze main = new Maze(maze);
 		main.run();
 	}
-
+	
 	public void run(){
 		System.out.println("Part One:\t" + countStepsPOne());
 		System.out.println("Part Two:\t" + countStepsPTwo());
 	}
-
+	
 	private int countStepsPOne(){
 		ArrayList<Integer> tmpMaze = (ArrayList<Integer>) maze.clone();
 		int index = 0;
@@ -48,7 +50,7 @@ public class Maze {
 		}
 		return count;
 	}
-
+	
 	private int countStepsPTwo(){
 		ArrayList<Integer> tmpMaze = (ArrayList<Integer>) maze.clone();
 		int index = 0;
@@ -61,5 +63,5 @@ public class Maze {
 		}
 		return count;
 	}
-
+	
 }

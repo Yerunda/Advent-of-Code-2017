@@ -2,6 +2,7 @@ package day4;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -10,29 +11,36 @@ public class PassphraseValidator {
 	private final int[] PRIMES = {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101};
 	
 	public static void main(String[] args) {
+		ArrayList<String> passphrases = new ArrayList<String>();
+		Scanner in = null;
+		try {
+			in = new Scanner(new FileReader("passphrases.txt"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		while(in.hasNextLine()){
+			passphrases.add(in.nextLine());
+		}
+		
+		in.close();
 		PassphraseValidator main = new PassphraseValidator();
-		main.run("passphrases.txt");
+		main.run(passphrases);
 	}
 	
-	public void run(String filename){
-		System.out.println("Part 1:\t" + countNonDuplicates(filename));
-		System.out.println("Part 2:\t" + countNonAnagrams(filename));
+	public void run(ArrayList<String> passphrases){
+		System.out.println("Part 1:\t" + countNonDuplicates(passphrases));
+		System.out.println("Part 2:\t" + countNonAnagrams(passphrases));
 	}
 	
 	/**
 	 * Part One
 	 */
-	private int countNonDuplicates(String filename){
-		Scanner in = null;
-		try {
-			in = new Scanner(new FileReader(filename));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	private int countNonDuplicates(ArrayList<String> passphrases){
+		
 		int count = 0;
 		HashSet<String> set = new HashSet<String>();
-		while(in.hasNextLine()){
-			String line = in.nextLine();
+		for(String line : passphrases){
 			String[] words = line.split("\\s");
 			for(String word : words){
 				set.add(word);
@@ -46,17 +54,11 @@ public class PassphraseValidator {
 	/**
 	 * Part Two
 	 */
-	private int countNonAnagrams(String filename){
-		Scanner in = null;
-		try {
-			in = new Scanner(new FileReader(filename));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	private int countNonAnagrams(ArrayList<String> passphrases){
+		
 		int count = 0;
 		HashSet<Integer> set = new HashSet<Integer>();
-		while(in.hasNextLine()){
-			String line = in.nextLine();
+		for(String line : passphrases){
 			String[] words = line.split("\\s");
 			for(String word : words){
 				int product = 1;
